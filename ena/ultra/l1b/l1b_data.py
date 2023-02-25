@@ -76,6 +76,10 @@ def l1b_data_products():
     Inputs:
         1. Direct events information. (TODO: is this in the Single event packets?)
         2. Calibration Table (Instruments will provide the table)
+        3. Calibration lookup table. (TODO: is it same has Calibration Table?)
+        4. Image Params
+        5. Another lookup table was mentioned before calculating species determination.
+            TODO What is that and where is it coming from?
 
     Description:
         Details in the algorithm document, section 1.2.3.2
