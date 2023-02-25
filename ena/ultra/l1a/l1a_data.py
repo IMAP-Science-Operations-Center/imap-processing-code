@@ -38,17 +38,17 @@ def l1a_data_products(l0_data, xcte_definition):
                     2. Auxiliary Packet Data [1, p. 186-188; Table 59],
                     3. Image Rates [1, p. 182; Table 55], and 
                     4. TOF Images.
-                    TODO: Where are Image Rates adn TOF images coming from?
+                    TODO: Where are Image Rates and TOF images coming from?
+             
             Outputs:
-                Table 1 from algorithm documents (TODO: confirm it?)
-                Table 1 list Direct Event items needed for algorithms
-                TODO: This table is created using Single event packets and
-                    Auxiliary packets. Do we only stored item listed in
-                    Table 1? or Do we store all items from Single Event
-                    packets and Auxiliary packets?
+                Raw events Tables (TODO Is this Table 2 from algorithm document? or is
+                it constructed using single event packets, auxiliary packets,
+                and other packets?)
+                
         3. Onboard Processed 2D Histograms
             TODO: How do we make this data product in this step? It's missing from
             the algorithm document.
+
             Inputs:
 
             Description:
