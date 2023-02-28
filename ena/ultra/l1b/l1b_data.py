@@ -44,8 +44,27 @@ def l1b_data_products():
 
         2. Badtimes List
             Input:
+                Spin Table - The Spin Table is a proposed, projectmaintained
+                    data set which represents binary filters, on/off, switches that represent the nonnominal
+                    / nominal conditions that warrant a bad spin. Look at Table 4 from algorithm document
+                
+                image rate packets
 
             Description:
+                the Bad Times list should mostly contain time periods when attitude
+                information is poor, or when an unexpectedly high number of non-Triple / low confidence events
+                occur.
+
+                image rate packet is used to calculate Rates p_i and may be useful for background calculations.
+
+                Bad times list is determined using these conditions:
+                    • Ultra in a state not suitable for ENA imaging (e.g., voltages not appropriate)
+                    • Ultra telemetry errors (e.g., checksum failures, bad packets)
+                    • Ultra event rates beyond threshold
+                    • Attitude system not suitable for Ultra processing (e.g., spin rates out of bounds,
+                    repointing in progress)
+                    • Excessive solar wind near Ultra’s FOV
+                    • Abundant Energetic ion / electron flux
 
             Output:
 
@@ -99,30 +118,4 @@ def l1b_data_products():
     """
 
     # 3. Bad Times List
-    """
-    Input:
-        Spin Table - The Spin Table is a proposed, projectmaintained
-            data set which represents binary filters, on/off, switches that represent the nonnominal
-            / nominal conditions that warrant a bad spin. Look at Table 4 from algorithm document
-        
-        image rate packets
-
-    Description:
-        the Bad Times list should mostly contain time periods when attitude
-        information is poor, or when an unexpectedly high number of non-Triple / low confidence events
-        occur.
-
-        image rate packet is used to calculate Rates p_i and may be useful for background calculations.
-
-        Bad times list is determined using these conditions:
-            • Ultra in a state not suitable for ENA imaging (e.g., voltages not appropriate)
-            • Ultra telemetry errors (e.g., checksum failures, bad packets)
-            • Ultra event rates beyond threshold
-            • Attitude system not suitable for Ultra processing (e.g., spin rates out of bounds,
-            repointing in progress)
-            • Excessive solar wind near Ultra’s FOV
-            • Abundant Energetic ion / electron flux
-
-    Output:
-
-    """
+    # see above notes
