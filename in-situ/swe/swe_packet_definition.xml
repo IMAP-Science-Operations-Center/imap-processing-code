@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xtce:SpaceSystem xmlns:xtce="http://www.omg.org/space/xtce" name="SWE-SciPackets">
+    <xtce:Header date="2023-03-06T09:56:00MST" version="1.0" author="Tenzin Choedon"/>
+    <xtce:TelemetryMetaData>
+        <xtce:ParameterTypeSet>
+            <xtce:IntegerParameterType name="uint1" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="1" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint2" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="2" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint3" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="3" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint8" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint11" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="11" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint14" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="14" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint16" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="16" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint20" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="20" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint32" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="32" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uintData" signed="false">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="10080" encoding="unsigned"/>
+            </xtce:IntegerParameterType>
+        </xtce:ParameterTypeSet>
+        <xtce:ParameterSet>
+            <!--CCSDS Header Elements-->
+            <xtce:Parameter name="VERSION" parameterTypeRef="uint3">
+                <xtce:LongDescription>CCSDS Packet Version Number</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="TYPE" parameterTypeRef="uint1">
+                <xtce:LongDescription>CCSDS Packet Type Indicator</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="SEC_HDR_FLG" parameterTypeRef="uint1">
+                <xtce:LongDescription>CCSDS Packet Secondary Header Flag</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="PKT_APID" parameterTypeRef="uint11">
+                <xtce:LongDescription>CCSDS Packet Application Process ID</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="GROUPING_FLAG" parameterTypeRef="uint2">
+                <xtce:LongDescription>CCSDS Packet Grouping Flag</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="SEQUENCE_COUNT" parameterTypeRef="uint14">
+                <xtce:LongDescription>CCSDS Packet Sequence Count</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="PKT_LENGTH" parameterTypeRef="uint16">
+                <xtce:LongDescription>CCSDS Packet length</xtce:LongDescription>
+            </xtce:Parameter>
+            <!-- SWE metadata -->
+            <xtce:Parameter name="SHCOARSE" parameterTypeRef="uint32">
+                <xtce:LongDescription>Mission Elasped Time</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="ACQ_START_COARSE" parameterTypeRef="uint32">
+                <xtce:LongDescription>Acquisition Start time coarse in seconds</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="ACQ_START_FINE" parameterTypeRef="uint20">
+                <xtce:LongDescription>Acquisition Start time fine in microseconds</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="CEM_NOMINAL_ONLY" parameterTypeRef="uint1">
+                <xtce:LongDescription>CEM Nominal status bit: '1' -- nominal, '0' -- not nomimal</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="SPIN_PHASE_VALIDITY" parameterTypeRef="uint1">
+                <xtce:LongDescription>Spin phase valid bit: '1' -- valid, '0' -- invalid</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="SPIN_PERIOD_SOURCE" parameterTypeRef="uint1">
+                <xtce:LongDescription>Spin period source bit: '1' -- sun sensor (safing), '0' -- star tracker (nominal)</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="spare" parameterTypeRef="uint1">
+                <xtce:LongDescription>Spare</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="SPIN_PHASE" parameterTypeRef="uint16">
+                <xtce:LongDescription>Spin phase</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="SPIN_PERIOD" parameterTypeRef="uint16">
+                <xtce:LongDescription>Spin period</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="ESA_STEPS" parameterTypeRef="uint8">
+                <xtce:LongDescription>ESA steps in packet</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="ESA_TABLE_NUM" parameterTypeRef="uint8">
+                <xtce:LongDescription>ESA table identifier</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="ESA_ACQ_CFG" parameterTypeRef="uint8">
+                <xtce:LongDescription>ESA acquisition configuration</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="HVPS_RAMP_SETTLE" parameterTypeRef="uint16">
+                <xtce:LongDescription>HVPS settling duration</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="ACQ_DURATION" parameterTypeRef="uint16">
+                <xtce:LongDescription>Acquisition duration</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="THRESHOLD_DAC" parameterTypeRef="uint16">
+                <xtce:LongDescription>Threshold DAC value</xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="STIM_CFG_REG" parameterTypeRef="uint16">
+                <xtce:LongDescription>Stim pulse configuration register. Bits 0-3, period, 4-7, duration, 8-9 mode</xtce:LongDescription>
+            </xtce:Parameter>
+            <!-- SWE science data -->
+            <xtce:Parameter name="SCIENCE_DATA" parameterTypeRef="uintData">
+                <xtce:LongDescription>
+                    Data for a science acquisiton quarter cycle.  (56 bit * 180 array)
+                    Seven consecutive bytes represent data for a single step:
+                    CEM1 - 8 bit counter
+                    CEM2 - 8 bit counter
+                    CEM3 - 8 bit counter
+                    CEM4 - 8 bit counter
+                    CEM5 - 8 bit counter
+                    CEM6 - 8 bit counter
+                    CEM7 - 8 bit counter
+                    180 steps are for the 180 ESA voltages used in a quarter cycle
+                </xtce:LongDescription>
+            </xtce:Parameter>
+            <xtce:Parameter name="CKSUM" parameterTypeRef="uint16">
+                <xtce:LongDescription>Checksum</xtce:LongDescription>
+            </xtce:Parameter>
+        </xtce:ParameterSet>
+        <xtce:ContainerSet>
+            <xtce:SequenceContainer name="CCSDSPacketHeader">
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="VERSION"/>
+                    <xtce:ParameterRefEntry parameterRef="TYPE"/>
+                    <xtce:ParameterRefEntry parameterRef="SEC_HDR_FLG"/>
+                    <xtce:ParameterRefEntry parameterRef="PKT_APID"/>
+                    <xtce:ParameterRefEntry parameterRef="GROUPING_FLAG"/>
+                    <xtce:ParameterRefEntry parameterRef="SEQUENCE_COUNT"/>
+                    <xtce:ParameterRefEntry parameterRef="PKT_LENGTH"/>
+                </xtce:EntryList>
+            </xtce:SequenceContainer>
+            <xtce:SequenceContainer name="SwePacket">
+                <xtce:BaseContainer containerRef="CCSDSPacketHeader"/>
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="SHCOARSE"/>
+                    <xtce:ParameterRefEntry parameterRef="ACQ_START_COARSE"/>
+                    <xtce:ParameterRefEntry parameterRef="ACQ_START_FINE"/>
+                    <xtce:ParameterRefEntry parameterRef="CEM_NOMINAL_ONLY"/>
+                    <xtce:ParameterRefEntry parameterRef="SPIN_PHASE_VALIDITY"/>
+                    <xtce:ParameterRefEntry parameterRef="SPIN_PERIOD_SOURCE"/>
+                    <xtce:ParameterRefEntry parameterRef="spare"/>
+                    <xtce:ParameterRefEntry parameterRef="SPIN_PHASE"/>
+                    <xtce:ParameterRefEntry parameterRef="SPIN_PERIOD"/>
+                    <xtce:ParameterRefEntry parameterRef="ESA_STEPS"/>
+                    <xtce:ParameterRefEntry parameterRef="ESA_TABLE_NUM"/>
+                    <xtce:ParameterRefEntry parameterRef="ESA_ACQ_CFG"/>
+                    <xtce:ParameterRefEntry parameterRef="HVPS_RAMP_SETTLE"/>
+                    <xtce:ParameterRefEntry parameterRef="ACQ_DURATION"/>
+                    <xtce:ParameterRefEntry parameterRef="THRESHOLD_DAC"/>
+                    <xtce:ParameterRefEntry parameterRef="STIM_CFG_REG"/>
+                    <xtce:ParameterRefEntry parameterRef="SCIENCE_DATA"/>
+                    <xtce:ParameterRefEntry parameterRef="CKSUM"/>
+                </xtce:EntryList>
+            </xtce:SequenceContainer>
+        </xtce:ContainerSet>
+    </xtce:TelemetryMetaData>
+</xtce:SpaceSystem>
