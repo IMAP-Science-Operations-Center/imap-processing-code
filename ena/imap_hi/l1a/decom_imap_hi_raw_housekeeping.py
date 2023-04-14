@@ -17,7 +17,7 @@ class decom_raw_housekeeping():
         maxLengthBits: TBD
         Description: Nominal Housekeeping
     """
-    
+
     # Steps:
 
     # 1. Write XTCE definition for IMAP-Hi 45 and 90 sensor head's Nominal Housekeeping packet

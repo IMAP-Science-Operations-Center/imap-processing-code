@@ -38,4 +38,16 @@ def histogram_plot():
         This can’t be used to identify species.
     * Captures all event data wether it's qualified or not
 
+    Requirement:
+        Time(TODO: Is this trigger_id in DE?) on horizontal axis and spin phase on the vertical, the counts observed in each 4 degree spin bin.
+        And use a rainbow + white linear autoscaled colourbar. These plots should be stacked with the first ESA in
+        the stepping sequence(nominally ESA 1) at the top and the final ESA (nominally ESA 9 ) at the bottom. The
+        ordering is by entry in the stepping sequence table (not by the voltages actually on the electrostatic analyzer).
+        The spin phase at the top of each plot should correspond to the 4 degree bin at which Hi45 and Hi90 were looking
+        closest to NEP(HAE z^hat). More details in the document.
+
+        Units of plot is suggested to keep in count. It can be plot in rates if there is requests. This will mean counts
+        will be converted to rates using this formula: counts/exposure_time.
+
+        Plots will be done inpendently for Hi45 and Hi90.
     """

@@ -104,4 +104,67 @@ def direct_event_plot():
                     ]
         * Every event Data is binned in 4 degree. And therefore every ESA step has 90 elements in array.
             90 * 4 == 360 degree
+
+    Steps to produce Direct Event plots:
+
+    Requirement:
+        Time(TODO: Is this trigger_id in DE?) on horizontal axis and spin phase on the vertical, the counts observed in each 4 degree spin bin.
+        And use a rainbow + white linear autoscaled colourbar. These plots should be stacked with the first ESA in
+        the stepping sequence(nominally ESA 1) at the top and the final ESA (nominally ESA 9 ) at the bottom. The
+        ordering is by entry in the stepping sequence table (not by the voltages actually on the electrostatic analyzer).
+        The spin phase at the top of each plot should correspond to the 4 degree bin at which Hi45 and Hi90 were looking
+        closest to NEP(HAE z^hat). More details in the document.
+
+        Units of plot is suggested to keep in count. It can be plot in rates if there is requests. This will mean counts
+        will be converted to rates using this formula: counts/exposure_time.
+
+        Plots will be done inpendently for Hi45 and Hi90.
+
+    Pre-process to generate data for plot:
+        * Use annotated direct events because it has information about
+            1. ESA step
+            2. Spin phase
+            3. Time of DE
+        * Make use of Histogram data to step through DE data and group together because if the telemetry scheme is as expected,
+            there should be one or two direct events packets covering exactly the same time as one histogram packet.
+        * Group DE per pointing, per sensor. In other word, bin direct event data.
+            – When you get to a SCI HIST packet, look at the MET. This time will be shortly after the end of
+                the data contained in the packet.3 Also, note the ESA stepping number. Initialize an array of 90
+                integers to zero.
+            – Step through the SCI DE packets, either from the start of the Pointing or from how far you’ve
+                gotten so far, looking for a metaevent with the same ESA stepping number.
+            – For every direct event following this metaevent, up until the next metaevent or an event time
+                after one second past the SCI HIST MET, determine if the event type is one which you wish to
+                histogram. If so, determine the phase angle of the direct event.
+                To determine the type of event:
+                * if it’s sent as a direct event, it counts as “qualified” as per the sensor qualification scheme.
+                * look at the 4-bit triggering-hit field. This lets you know if A, B, or C1 was part of the event.
+                * If the first event was [A,B,C1], respectively, then [B,A,A] was also hit if the first TOF is not
+                1023, [C1,C1,B] was also hit if the second TOF is not 1023, and C2 was hit if C1 was hit and
+                the third TOF field is not 1023.
+                To determine the spin phase of the event:
+                * Determine the absolute time tDE of the direct event by adding the time of the preceding
+                metaevent to the “tick interval” multiplied by the timetag value. Then, add half a tick: on
+                average, an event with a time tag of n occurred halfway between n and n + 1.
+                * Determine the phase 0 spin times before (tb) and after (ta) the tDE calculated. If you want
+                a direct comparison with the histograms, use the spacecraft spin pulse list; if you want a
+                comparison with where things ought to be use the true spin pulse list. For this set of plots
+                only, use the spacecraft spin pulse list.
+                *  phase = tDE − tb / ta − tb
+                You may or may not be paranoid enough to make sure this is greater than or equal to zero
+                and less than one.
+            – Depending on how the C&DH defines spin phase, expect to adjust the spin phase by the clocking
+                angle of the sensor.
+            – Add one to the integer in the array corresponding to (int)(phase × 360◦/4◦).
+            – Once you’ve stepped through all the direct events related to this histogram packet, plot the array
+                of histogrammed direct events, which will resemble, in form, the contents from the histogram
+                packet. In Section 2.2.2, you would have simply plotted the (sum of various) histograms from the
+                histogram packet.
+            – Continue on through the Pointing.
+
+            The result here is one plot per sensor per ESA per calibration product4 from binned DEs.
+        * Calculate exposure time if plot will be in rate. For this plot, we can use this formula to calculate exposure time.
+            (8 spins at 15s/spin, or whatever the average spin value ends up being for
+            the Pointing, divided into 90 angle bins is 1.33s per bin; the slight change in exposure time from bin to bin
+            over the Pointing is ignorably small for the purposes of this diagnostic plot)
     """
