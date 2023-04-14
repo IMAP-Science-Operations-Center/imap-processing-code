@@ -25,6 +25,21 @@ def annotated_direct_events():
                 – If nutations are insignificant, then average spin axis and instantaneous phase (determined by
                 comparing direct event timetags to the list of phase-0 times) are entirely sufficient to determine
                 look direction.
+
+                In simpler terms, When we want to figure out where to point a telescope to observe a specific object
+                in space, we need to know the direction in which the telescope should be pointed. There are two main
+                things we need to consider:
+
+                    The average spin axis: This refers to the direction in which the Earth is rotating.
+                        We can use this information to figure out where the object will be at a certain time.
+
+                    The instantaneous phase: This refers to the position of the object relative to the spin axis at a
+                        specific moment in time. We can use this information to determine the exact direction in which
+                        the telescope should be pointed to observe the object.
+
+                Sometimes there are small movements in the Earth's rotation, called nutations, that can affect our
+                calculations. However, if these movements are not significant, we can ignore them and rely solely on
+                the average spin axis and instantaneous phase to determine the look direction for the telescope.
                 – If the mission decides to use GPS Epoch time as MET, the mission will start some time around
                 1.4e9 seconds, at which point the resolution of a double variable (about 10 μs) is starting to get
                 close to the precision of a timetag tick (2 ms). It might be worth considering long doubles, except
