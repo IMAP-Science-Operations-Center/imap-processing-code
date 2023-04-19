@@ -16,13 +16,14 @@ def imap_hi_bad_times():
     housekeeping in time-wise relation to science data, and “housekeeping” checks on direct events in relation
     to histogrammed data.
 
+    • Store, in arrays, the times of creation of each histogram packet, along with the ESA stepping number
+        (histogram packets are created at the end of each ESA step). Also, for each histogram packet creation
+        time, initialize one array of 90 integers (or bits), all to 1. This is the start of the “good times”.
+    • From the meta-events in the SCI DE packets and/or from the “spare field meta-DE” space, determine
+        exactly when the sensor changed the ESA step. Store these times and ESA steps in arrays as well.
+
     Step through the SCI DE packets, the histogram packets, and the housekeeping packets for each sensor
-    head, in timewise order.
-        • Store, in arrays, the times of creation of each histogram packet, along with the ESA stepping number
-            (histogram packets are created at the end of each ESA step). Also, for each histogram packet creation
-            time, initialize one array of 90 integers (or bits), all to 1. This is the start of the “good times”.
-        • From the meta-events in the SCI DE packets and/or from the “spare field meta-DE” space, determine
-            exactly when the sensor changed the ESA step. Store these times and ESA steps in arrays as well.
+    head, in timewise order. Check if data is bad using these conditions:
         • If you find histogram packets without corresponding DE packets, or vice versa, log a warning. There
             needs to be histogram data for an interval to be a “good time”, but there doesn’t absolutely need to
             be DE data, because of how we calculate DE exposure time (Section 2.3.5). Even so, consider it a
@@ -62,35 +63,41 @@ def imap_hi_bad_times():
                     * Otherwise, log a warning and note the time.
                 Note that if a fully valid Instrument Status Summary has been constructed already, some of this
                 testing may become simpler, and fewer log messages may ensue.
-        • log, at a warning level, the percentage of times that the ESA was not found to be at a valid setting
-        during HVSCI, using the counters from the previous step. This is a useful value to trend over the
-        mission.
-        • check to see that each ESA stepping interval contains eight spins. How:
-            – Find the meta-event from the SCI DE packets for this ESA step (it’s in an array created already).
-            – Take the time difference between this meta-event and the MET creation time of the histogram
-            packet.
-            – Divide this difference by the average spin period this Pointing (excluding, as usual, the first few
-            and last few spins).
-            – Add 0.25 and truncate to integer.
-            – This should be 8. If it’s greater than 8, log a warning (probably, it’s due to an interval out of
-            HVSCI). If it’s less than 8, set all 90 entries in the array corresponding to this histogram packet’s
-            MET to zero.
-        • if some foreground object hoves into view that we wish to exclude, such as, I don’t know, a comet, and
-            we have a SPICE kernel for it, I guess we could mask out any of the 90 angle bins that end up seeing
-            it. I probably wouldn’t code that up just now, though.
-    Anything that’s not zero at this point is not a “bad time”. But we’re not done yet. The bad times list
-    isn’t finished until after the Annotated Direct Events are created, because annotating direct events might
-    find more issues.
+            • log, at a warning level, the percentage of times that the ESA was not found to be at a valid setting
+            during HVSCI, using the counters from the previous step. This is a useful value to trend over the
+            mission.
+            • check to see that each ESA stepping interval contains eight spins. How:
+                – Find the meta-event from the SCI DE packets for this ESA step (it’s in an array created already).
+                – Take the time difference between this meta-event and the MET creation time of the histogram
+                packet.
+                – Divide this difference by the average spin period this Pointing (excluding, as usual, the first few
+                and last few spins).
+                – Add 0.25 and truncate to integer.
+                – This should be 8. If it’s greater than 8, log a warning (probably, it’s due to an interval out of
+                HVSCI). If it’s less than 8, set all 90 entries in the array corresponding to this histogram packet’s
+                MET to zero.
+            • if some foreground object hoves into view that we wish to exclude, such as, I don’t know, a comet, and
+                we have a SPICE kernel for it, I guess we could mask out any of the 90 angle bins that end up seeing
+                it. I probably wouldn’t code that up just now, though.
+
+    Anything that’s not zero at this point is not a “bad time”. If data packet made it without any of the issue listed
+    above, then we store information to get preliminary good times list.
 
     towards_bad_times_list = [
         {
-            "packet_creation_time(get it from histogram packet.)": [1, 1, 1, ...., 1] (90 element),
-            "ESA step x": "time of when the sensor changed the ESA step (from meta-event in DE packet)",
+            "packet_creation_time(get it from histogram packet)": [1, 1, 1, ...., 1] (90 element to keep track of good or bad angle),
+            "ESA step": "time of when the sensor changed the ESA step (from meta-event in DE packet)",
             "Warning Message": ""
         }
         ,
         ....
     ]
 
-    bad_times_list = filter out towards_bad_times_list by going through annotated direct event.
+    Bad times list could be list of histogram_packet_creation_time which we can use to construct [start_time, end_time] list.
+    bad_times_list(AKA preliminary good times list) = [histogram_packet_creation_time, .....] will change to this
+    good_times_list = [[start_time, end_time], [start_time, end_time], ....] with some calculations will be done in L1C.
+
+    But we’re not done yet. The bad times list
+    isn’t finished until after the Annotated Direct Events are created, because annotating direct events might
+    find more issues.
     """

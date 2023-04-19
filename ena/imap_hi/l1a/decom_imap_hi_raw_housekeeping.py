@@ -23,3 +23,6 @@ class decom_raw_housekeeping():
     # 1. Write XTCE definition for IMAP-Hi 45 and 90 sensor head's Nominal Housekeeping packet
     # 2. For each sensor head, use lasp_packet to parse the CCSDS packet
     # 3. For each sensor head, write unpacked data to CDF file
+    # 4. Add paddings to the CDF file to make the file size a multiple of 8 bytes.
+    #    Eg. Hit first value is 2-bit but when we store it in CDF file, it will be stored
+    #    in 8 or 16 or 32 or 64 bits.

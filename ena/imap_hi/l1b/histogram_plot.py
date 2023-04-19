@@ -7,7 +7,17 @@ def histogram_plot():
         – 11 12-bit long counters (A, B, C, AB, C1C2, AC1, BC1, ABC1, AC1C2, BC1C2, ABC1C2)
         – 5 12-bit diagnostic counters (totalA, totalB, totalC, FEE DE SENT, FEE DE RECD)
 
-    TODO: What does this counter mean? Is this all types of coincidence types we can have?
+    First 8 events are good direct events, 11 after that is not good enough data but useful
+    for diagnostic. Last 5 gives total counts and some other information.
+
+    Histogram data is in this order:
+        90 12-bit counters for AB, 90  12-bit counters for C1C2, 90 12-bit counters for AC1, 90 12-bit counters for BC1,
+        90 12-bit counters for ABC1, 90 12-bit counters for AC1C2, 90 12-bit counters for BC1C2, 90 12-bit counters for ABC1C2,
+        and so on.
+
+    Each 90 12-bit counter is an array of 90 elements.
+    Each element in the array represents 4 degree bin. 360 degree angle divided by 4 degree
+    gives us 90 bins. And we have counts of every ENA event in their respective bins.
 
     Histogram data is expected on an 8-spin cadence (nominally every two minutes) during HVSCI mode,
     aligned with the stepping of the ESA.
@@ -17,11 +27,11 @@ def histogram_plot():
     compression for larger values.
 
     Notes from Discussion:
-    Every two minutes, we capture data of one ESA step:
+    Every two minutes(8 spins), we capture data of one ESA step:
     * Every ESA steps ( We have 9 ESA steps)
         * One histogram data packets gets send down
         * For every coincidence types:
-            * Coincidence A has 90s element array, AB has 90 elements array and so on.  In other words,
+            * Coincidence A has 90s element array(90 12-bit), AB has 90 elements array and so on.  In other words,
                 every coincidence types combination will have 90s element array.
             * It has 90 element array. (90 4 degree bin)
                 * It’s integer and it represents counts
@@ -39,12 +49,16 @@ def histogram_plot():
     * Captures all event data wether it's qualified or not
 
     Requirement:
-        Time(TODO: Is this trigger_id in DE?) on horizontal axis and spin phase on the vertical, the counts observed in each 4 degree spin bin.
+        Time on horizontal axis and spin phase on the vertical, the counts observed in each 4 degree spin bin.
         And use a rainbow + white linear autoscaled colourbar. These plots should be stacked with the first ESA in
         the stepping sequence(nominally ESA 1) at the top and the final ESA (nominally ESA 9 ) at the bottom. The
         ordering is by entry in the stepping sequence table (not by the voltages actually on the electrostatic analyzer).
         The spin phase at the top of each plot should correspond to the 4 degree bin at which Hi45 and Hi90 were looking
         closest to NEP(HAE z^hat). More details in the document.
+
+        We can use histogram packet creation time for horizontal axis. Note that there is different packet creation time for
+        each ESA step data. To determine which time to use on horizontal axis, we use the earlist time value of all
+        ESA data. This is what was done in the past mission.
 
         Units of plot is suggested to keep in count. It can be plot in rates if there is requests. This will mean counts
         will be converted to rates using this formula: counts/exposure_time.

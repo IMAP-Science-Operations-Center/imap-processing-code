@@ -17,4 +17,7 @@ def processed_housekeeping(raw_housekeeping_data):
         2. Housekeeping not mentioned in this list is not directly relevant to science data processing.
             Does this mean we should filter housekeeping information based on the list?
         3. How to convert to physical unit? And how do we know which ones need convertion or not?
+            Note: This will be provided at later time. It will likely be a linear offset. For
+            example, we may get an offset value that we apply to the dataset.
+            physical_unit = ax + b and instrument team will give us a and b's value and x is the data.
     """
