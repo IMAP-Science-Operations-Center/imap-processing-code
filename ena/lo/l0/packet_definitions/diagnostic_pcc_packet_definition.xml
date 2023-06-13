@@ -154,6 +154,13 @@
 					<xtce:ParameterRefEntry parameterRef="SPARE"/>
 					<xtce:ParameterRefEntry parameterRef="CHKSUM"/>
 				</xtce:EntryList>
+				<xtce:BaseContainer containerRef="CCSDSPacket">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison parameterRef="PKT_APID" value="725" useCalibratedValue="false"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
 			</xtce:SequenceContainer>
 		</xtce:ContainerSet>
 	</xtce:TelemetryMetaData>

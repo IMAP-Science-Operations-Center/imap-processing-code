@@ -23,10 +23,14 @@
 				<xtce:UnitSet/>
 				<xtce:IntegerDataEncoding sizeInBits="14" encoding="unsigned"/>
 			</xtce:IntegerParameterType>
-			<xtce:IntegerParameterType name="byte16" signed="true">
+			<xtce:BinaryParameterType name="byte16" sizeInBits="16">
 				<xtce:UnitSet/>
-				<xtce:IntegerDataEncoding sizeInBits="16" encoding="signed"/>
-			</xtce:IntegerParameterType>
+				<xtce:BinaryDataEncoding>
+    				<xtce:SizeInBits>
+						<xtce:FixedValue>16</xtce:FixedValue>
+					</xtce:SizeInBits>
+  				</xtce:BinaryDataEncoding>
+			</xtce:BinaryParameterType>
 			<xtce:IntegerParameterType name="uint16" signed="false">
 				<xtce:UnitSet/>
 				<xtce:IntegerDataEncoding sizeInBits="16" encoding="unsigned"/>
@@ -35,14 +39,22 @@
 				<xtce:UnitSet/>
 				<xtce:IntegerDataEncoding sizeInBits="32" encoding="unsigned"/>
 			</xtce:IntegerParameterType>
-			<xtce:IntegerParameterType name="byte96" signed="true">
+			<xtce:BinaryParameterType name="byte96" sizeInBits="96">
 				<xtce:UnitSet/>
-				<xtce:IntegerDataEncoding sizeInBits="96" encoding="signed"/>
-			</xtce:IntegerParameterType>
-			<xtce:IntegerParameterType name="byte960" signed="true">
+				<xtce:BinaryDataEncoding>
+    				<xtce:SizeInBits>
+						<xtce:FixedValue>96</xtce:FixedValue>
+					</xtce:SizeInBits>
+  				</xtce:BinaryDataEncoding>
+			</xtce:BinaryParameterType>
+			<xtce:BinaryParameterType name="byte960" sizeInBits="960">
 				<xtce:UnitSet/>
-				<xtce:IntegerDataEncoding sizeInBits="960" encoding="signed"/>
-			</xtce:IntegerParameterType>
+				<xtce:BinaryDataEncoding>
+    				<xtce:SizeInBits>
+						<xtce:FixedValue>960</xtce:FixedValue>
+					</xtce:SizeInBits>
+  				</xtce:BinaryDataEncoding>
+			</xtce:BinaryParameterType>
 		</xtce:ParameterTypeSet>
 		<xtce:ParameterSet>
 			<xtce:Parameter name="VERSION" parameterTypeRef="uint3">
@@ -145,7 +157,7 @@ Ion anode B0 / Ion anode B3</xtce:LongDescription>
 					<xtce:ParameterRefEntry parameterRef="PKT_LEN"/>
 				</xtce:EntryList>
 			</xtce:SequenceContainer>
-			<xtce:SequenceContainer name="P_ILO_RAW_CNT">
+			<xtce:SequenceContainer abstract="true" name="P_ILO_RAW_CNT">
 				<xtce:EntryList>
 					<xtce:ParameterRefEntry parameterRef="SHCOARSE"/>
 					<xtce:ParameterRefEntry parameterRef="MET_SUB"/>
@@ -168,6 +180,13 @@ Ion anode B0 / Ion anode B3</xtce:LongDescription>
 					<xtce:ParameterRefEntry parameterRef="DISC_TOF3"/>
 					<xtce:ParameterRefEntry parameterRef="CHKSUM"/>
 				</xtce:EntryList>
+				<xtce:BaseContainer containerRef="CCSDSPacket">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison parameterRef="PKT_APID" value="689" useCalibratedValue="false"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
 			</xtce:SequenceContainer>
 		</xtce:ContainerSet>
 	</xtce:TelemetryMetaData>
