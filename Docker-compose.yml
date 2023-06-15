@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  imap_processing_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile # path to Dockerfile
+    image: imap_processing_workspace
+    stdin_open: true # This line is same as docker run -i
+    tty: true # This line is same as docker run -t
+    volumes: # mount volumes
+      - ./:/workspaces/cdk-workspace/
+      - $HOME/.aws:/workspaces/cdk-workspace/.aws/
