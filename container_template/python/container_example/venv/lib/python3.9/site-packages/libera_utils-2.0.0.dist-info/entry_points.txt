@@ -1,0 +1,3 @@
+[console_scripts]
+libera-utils=libera_utils.cli:main
+
